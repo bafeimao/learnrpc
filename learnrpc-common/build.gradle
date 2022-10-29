@@ -1,0 +1,9 @@
+group 'io.learn.rpc'
+version '0.0.1-SNAPSHOT'
+
+jar.enabled = true
+
+
+dependencies {
+    implementation project(":learnrpc-annotation")
+}
