@@ -1,9 +1,12 @@
 package io.learn.rpc.test.consumer.handler;
 
 import io.learn.rpc.consumer.common.RpcConsumer;
+import io.learn.rpc.consumer.common.handler.RpcConsumerHandler;
 import io.learn.rpc.protocol.RpcProtocol;
 import io.learn.rpc.protocol.header.RpcHeaderFactory;
 import io.learn.rpc.protocol.request.RpcRequest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @projectName: rpc
@@ -15,9 +18,12 @@ import io.learn.rpc.protocol.request.RpcRequest;
  * @version: 1.0
  */
 public class RpcConsumerHandlerTest {
+    private static final Logger log = LoggerFactory.getLogger(RpcConsumerHandler.class);
+
     public static void main(String[] args) throws Exception {
         RpcConsumer consumer = RpcConsumer.getInstance();
-        consumer.sendRequest(getRpcRequestProtocol());
+        Object result = consumer.sendRequest(getRpcRequestProtocol());
+        log.info("get data from server consumer===>>>" + result.toString());
         Thread.sleep(2000);
         consumer.close();
     }
