@@ -37,13 +37,10 @@ public class RpcServiceScanner extends ClassScanner {
                 if (rpcService != null) {
                     //Priority use interface class ,interface class name is null then use interface class name
                     //todo subsequent registration with the registry
-                    LOGGER.info("marked @RpcService annotation class instance name===>>>"
-                            + clazz.getName());
-                    LOGGER.info("@RpcService annotation marked attribute information:");
-                    LOGGER.info("interfaceClass===>>> " + rpcService.interfaceClass().getName());
-                    LOGGER.info("interfaceClassName===>>>" + rpcService.interfaceClassName());
-                    LOGGER.info("version===>>>" + rpcService.version());
-                    LOGGER.info("group===>>>" + rpcService.group());
+                    //handlerMap
+                    String serviceName = getServiceName(rpcService);
+                    String key = serviceName.concat(rpcService.version()).concat(rpcService.group());
+                    handlerMap.put(key, clazz.getDeclaredConstructor().newInstance());
                 }
             } catch (Exception e) {
                 LOGGER.error("scan classes throw exception: {}", e);
@@ -51,4 +48,25 @@ public class RpcServiceScanner extends ClassScanner {
         });
         return handlerMap;
     }
+
+    /**
+     * get Service name
+     *
+     * @param rpcService
+     * @return
+     */
+    private static String getServiceName(RpcService rpcService) {
+        //priority use interface class
+        Class clazz = rpcService.interfaceClass();
+        if (clazz == void.class) {
+            return rpcService.interfaceClassName();
+        }
+        String serviceName = clazz.getName();
+        if (serviceName == null || serviceName.trim().isEmpty()) {
+            serviceName = rpcService.interfaceClassName();
+        }
+        return serviceName;
+    }
+
+
 }
