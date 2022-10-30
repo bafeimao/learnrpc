@@ -1,5 +1,7 @@
 package io.learn.rpc.consumer.common.future;
 
+import io.learn.rpc.common.threadpool.ClientThreadPool;
+import io.learn.rpc.consumer.common.callback.AsyncRpcCallback;
 import io.learn.rpc.protocol.RpcProtocol;
 import io.learn.rpc.protocol.request.RpcRequest;
 import io.learn.rpc.protocol.response.RpcResponse;
@@ -7,11 +9,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.Serial;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.concurrent.locks.AbstractQueuedSynchronizer;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * @projectName: rpc
@@ -32,10 +37,50 @@ public class RpcFuture extends CompletableFuture<Object> {
 
     private long responseTimeThreshold = 5000;
 
+    private List<AsyncRpcCallback> pendingCallbacks = new ArrayList<>();
+
+    private ReentrantLock lock = new ReentrantLock();
+
     public RpcFuture(RpcProtocol<RpcRequest> requestRpcProtocol) {
         this.sync = new Sync();
         this.requestRpcProtocol = requestRpcProtocol;
         this.startTime = System.currentTimeMillis();
+    }
+
+    private void runCallBack(final AsyncRpcCallback callback) {
+        final RpcResponse res = this.responseRpcProtocol.getBody();
+        ClientThreadPool.submit(() -> {
+            if (!res.isError()) {
+                callback.onSuccess(res.getResult());
+            } else {
+                callback.onException(new RuntimeException("Response error", new Throwable(res.getError())));
+            }
+        });
+    }
+
+    public RpcFuture addCallback(AsyncRpcCallback callback) {
+        lock.lock();
+        try {
+            if (isDone()) {
+                runCallBack(callback);
+            } else {
+                this.pendingCallbacks.add(callback);
+            }
+        } finally {
+            lock.unlock();
+        }
+        return this;
+    }
+
+    private void invokeCallbacks() {
+        lock.lock();
+        try {
+            for (final AsyncRpcCallback callback : pendingCallbacks) {
+                runCallBack(callback);
+            }
+        } finally {
+            lock.unlock();
+        }
     }
 
     @Override
@@ -85,6 +130,8 @@ public class RpcFuture extends CompletableFuture<Object> {
     public void done(RpcProtocol<RpcResponse> responseRpcProtocol) {
         this.responseRpcProtocol = responseRpcProtocol;
         sync.release(1);
+        //call invokeCallbacks
+        invokeCallbacks();
         //threshold
         long responseTime = System.currentTimeMillis() - startTime;
         if (responseTime > this.responseTimeThreshold) {

@@ -9,6 +9,7 @@ version '0.0.1-SNAPSHOT'
 dependencies {
     implementation project(":learnrpc-protocol")
     implementation project(":learnrpc-codec")
+    implementation project(":learnrpc-common")
 }
 
 test {

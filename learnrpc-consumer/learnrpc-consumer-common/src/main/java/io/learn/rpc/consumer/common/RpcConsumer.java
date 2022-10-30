@@ -1,5 +1,6 @@
 package io.learn.rpc.consumer.common;
 
+import io.learn.rpc.common.threadpool.ClientThreadPool;
 import io.learn.rpc.consumer.common.future.RpcFuture;
 import io.learn.rpc.consumer.common.handler.RpcConsumerHandler;
 import io.learn.rpc.consumer.common.initializer.RpcConsumerInitializer;
@@ -56,6 +57,7 @@ public class RpcConsumer {
 
     public void close() {
         eventLoopGroup.shutdownGracefully();
+        ClientThreadPool.shutdown();
     }
 
     public RpcFuture sendRequest(RpcProtocol<RpcRequest> protocol) throws Exception {

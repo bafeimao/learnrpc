@@ -1,7 +1,7 @@
 package io.learn.rpc.test.consumer.handler;
 
 import io.learn.rpc.consumer.common.RpcConsumer;
-import io.learn.rpc.consumer.common.context.RpcContext;
+import io.learn.rpc.consumer.common.callback.AsyncRpcCallback;
 import io.learn.rpc.consumer.common.future.RpcFuture;
 import io.learn.rpc.consumer.common.handler.RpcConsumerHandler;
 import io.learn.rpc.protocol.RpcProtocol;
@@ -25,8 +25,19 @@ public class RpcConsumerHandlerTest {
     public static void main(String[] args) throws Exception {
         RpcConsumer consumer = RpcConsumer.getInstance();
         consumer.sendRequest(getRpcRequestProtocol());
-        RpcFuture future = RpcContext.getContext().getRpcFuture();
-        log.info("get data from server consumer===>>>" + future.get());
+        RpcFuture rpcFuture = consumer.sendRequest(getRpcRequestProtocol());
+        rpcFuture.addCallback(new AsyncRpcCallback() {
+            @Override
+            public void onSuccess(Object result) {
+                log.info("get data from service consumer===>>>" + result);
+            }
+
+            @Override
+            public void onException(Exception e) {
+                log.error("throw exception" + e);
+            }
+        });
+        Thread.sleep(2000);
         consumer.close();
     }
 
@@ -41,7 +52,7 @@ public class RpcConsumerHandlerTest {
         request.setParameters(new Object[]{"learn"});
         request.setParameterTypes(new Class[]{String.class});
         request.setVersion("1.0.0");
-        request.setAsync(true);
+        request.setAsync(false);
         request.setOneway(false);
         protocol.setBody(request);
         return protocol;
