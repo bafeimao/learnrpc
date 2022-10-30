@@ -1,7 +1,9 @@
 package io.learn.rpc.test.provider.service.impl;
 
 import io.learn.rpc.annotation.RpcService;
-import io.learn.rpc.test.provider.service.DemoService;
+import io.learn.rpc.test.api.DemoService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @projectName: rpc
@@ -17,4 +19,11 @@ import io.learn.rpc.test.provider.service.DemoService;
         version = "1.0.0",
         group = "learn")
 public class ProviderDemoServiceImpl implements DemoService {
+    private final Logger log = LoggerFactory.getLogger(ProviderDemoServiceImpl.class);
+
+    @Override
+    public String hello(String name) {
+        log.info("hello method parameter===>>>{}", name);
+        return "hello" + name;
+    }
 }

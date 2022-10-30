@@ -23,4 +23,6 @@ include 'learnrpc-test:learnrpc-test-consumer'
 findProject(':learnrpc-test:learnrpc-test-consumer')?.name = 'learnrpc-test-consumer'
 include 'learnrpc-test:learnrpc-test-consumer:learnrpc-test-consumer-codec'
 findProject(':learnrpc-test:learnrpc-test-consumer:learnrpc-test-consumer-codec')?.name = 'learnrpc-test-consumer-codec'
+include 'learnrpc-test:learnrpc-test-api'
+findProject(':learnrpc-test:learnrpc-test-api')?.name = 'learnrpc-test-api'
 

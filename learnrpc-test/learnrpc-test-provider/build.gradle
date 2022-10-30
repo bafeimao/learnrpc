@@ -9,6 +9,7 @@ dependencies {
     implementation project(":learnrpc-annotation")
     implementation project(":learnrpc-provider:learnrpc-provider-common")
     implementation project(":learnrpc-provider:learnrpc-provider-native")
+    implementation project(":learnrpc-test:learnrpc-test-api")
 }
 
 test {
