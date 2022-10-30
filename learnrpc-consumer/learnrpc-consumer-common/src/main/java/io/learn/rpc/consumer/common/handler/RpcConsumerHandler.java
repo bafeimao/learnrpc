@@ -2,6 +2,7 @@ package io.learn.rpc.consumer.common.handler;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.learn.rpc.consumer.common.future.RpcFuture;
 import io.learn.rpc.protocol.RpcProtocol;
 import io.learn.rpc.protocol.header.RpcHeader;
 import io.learn.rpc.protocol.request.RpcRequest;
@@ -39,6 +40,8 @@ public class RpcConsumerHandler extends SimpleChannelInboundHandler<RpcProtocol<
      */
     private Map<Long, RpcProtocol<RpcResponse>> pendingResponse = new ConcurrentHashMap<>();
 
+    private Map<Long, RpcFuture> pendingRpc = new ConcurrentHashMap<>();
+
     public Channel getChannel() {
         return channel;
     }
@@ -68,23 +71,26 @@ public class RpcConsumerHandler extends SimpleChannelInboundHandler<RpcProtocol<
         log.info("server consumer receive message===>>>{}", mapper.writeValueAsString(protocol));
         RpcHeader header = protocol.getHeader();
         long requestId = header.getRequestId();
-        pendingResponse.put(requestId, protocol);
+        RpcFuture rpcFuture = pendingRpc.remove(requestId);
+        if (rpcFuture != null) {
+            rpcFuture.done(protocol);
+        }
     }
 
-    public Object sendRequest(RpcProtocol<RpcRequest> protocol) throws JsonProcessingException {
+    public RpcFuture sendRequest(RpcProtocol<RpcRequest> protocol) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         log.info("server consumer send message===>>>{}", mapper.writeValueAsString(protocol));
+        RpcFuture rpcFuture = this.getRpcFuture(protocol);
         channel.writeAndFlush(protocol);
-        RpcHeader header = new RpcHeader();
+        return rpcFuture;
+    }
+
+    private RpcFuture getRpcFuture(RpcProtocol<RpcRequest> protocol) {
+        RpcFuture rpcFuture = new RpcFuture(protocol);
+        RpcHeader header = protocol.getHeader();
         long requestId = header.getRequestId();
-        //sync turn wait
-        while (true) {
-            RpcProtocol<RpcResponse> responseRpcProtocol =
-                    pendingResponse.remove(requestId);
-            if (responseRpcProtocol != null) {
-                return responseRpcProtocol.getBody().getResult();
-            }
-        }
+        pendingRpc.put(requestId, rpcFuture);
+        return rpcFuture;
     }
 
     public void close() {

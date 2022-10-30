@@ -1,6 +1,7 @@
 package io.learn.rpc.test.consumer.handler;
 
 import io.learn.rpc.consumer.common.RpcConsumer;
+import io.learn.rpc.consumer.common.future.RpcFuture;
 import io.learn.rpc.consumer.common.handler.RpcConsumerHandler;
 import io.learn.rpc.protocol.RpcProtocol;
 import io.learn.rpc.protocol.header.RpcHeaderFactory;
@@ -22,9 +23,8 @@ public class RpcConsumerHandlerTest {
 
     public static void main(String[] args) throws Exception {
         RpcConsumer consumer = RpcConsumer.getInstance();
-        Object result = consumer.sendRequest(getRpcRequestProtocol());
-        log.info("get data from server consumer===>>>" + result.toString());
-        Thread.sleep(2000);
+        RpcFuture future = consumer.sendRequest(getRpcRequestProtocol());
+        log.info("get data from server consumer===>>>" + future.get());
         consumer.close();
     }
 

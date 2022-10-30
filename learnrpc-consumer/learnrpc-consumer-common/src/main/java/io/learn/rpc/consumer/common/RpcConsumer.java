@@ -1,5 +1,6 @@
 package io.learn.rpc.consumer.common;
 
+import io.learn.rpc.consumer.common.future.RpcFuture;
 import io.learn.rpc.consumer.common.handler.RpcConsumerHandler;
 import io.learn.rpc.consumer.common.initializer.RpcConsumerInitializer;
 import io.learn.rpc.protocol.RpcProtocol;
@@ -57,7 +58,7 @@ public class RpcConsumer {
         eventLoopGroup.shutdownGracefully();
     }
 
-    public Object sendRequest(RpcProtocol<RpcRequest> protocol) throws Exception {
+    public RpcFuture sendRequest(RpcProtocol<RpcRequest> protocol) throws Exception {
         //todo 暂时写死，后续从注册中心获取
         String serviceAddress = "127.0.0.1";
         int port = 27880;
