@@ -1,6 +1,7 @@
 package io.learn.rpc.common.scanner.server;
 
 import io.learn.rpc.annotation.RpcService;
+import io.learn.rpc.common.helper.RpcServiceHelper;
 import io.learn.rpc.common.scanner.ClassScanner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,7 +40,8 @@ public class RpcServiceScanner extends ClassScanner {
                     //todo subsequent registration with the registry
                     //handlerMap
                     String serviceName = getServiceName(rpcService);
-                    String key = serviceName.concat(rpcService.version()).concat(rpcService.group());
+                    String key = RpcServiceHelper.buildServiceKey(serviceName, rpcService.version(),
+                            rpcService.group());
                     handlerMap.put(key, clazz.getDeclaredConstructor().newInstance());
                 }
             } catch (Exception e) {
