@@ -2,6 +2,7 @@ package io.learn.rpc.consumer.common.handler;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.learn.rpc.consumer.common.context.RpcContext;
 import io.learn.rpc.consumer.common.future.RpcFuture;
 import io.learn.rpc.protocol.RpcProtocol;
 import io.learn.rpc.protocol.header.RpcHeader;
@@ -77,12 +78,30 @@ public class RpcConsumerHandler extends SimpleChannelInboundHandler<RpcProtocol<
         }
     }
 
-    public RpcFuture sendRequest(RpcProtocol<RpcRequest> protocol) throws JsonProcessingException {
+    public RpcFuture sendRequest(RpcProtocol<RpcRequest> protocol, boolean async, boolean oneway) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         log.info("server consumer send message===>>>{}", mapper.writeValueAsString(protocol));
+        return oneway ? this.sendRequestOneway(protocol) : async ?
+                sendRequestAsync(protocol) : this.sendRequestSync(protocol);
+    }
+
+    private RpcFuture sendRequestSync(RpcProtocol<RpcRequest> protocol) {
         RpcFuture rpcFuture = this.getRpcFuture(protocol);
         channel.writeAndFlush(protocol);
         return rpcFuture;
+    }
+
+    private RpcFuture sendRequestAsync(RpcProtocol<RpcRequest> protocol) {
+        RpcFuture rpcFuture = this.getRpcFuture(protocol);
+        //if async put rpcFuture into context
+        RpcContext.getContext().setRpcFuture(rpcFuture);
+        channel.writeAndFlush(protocol);
+        return null;
+    }
+
+    private RpcFuture sendRequestOneway(RpcProtocol<RpcRequest> protocol) {
+        channel.writeAndFlush(protocol);
+        return null;
     }
 
     private RpcFuture getRpcFuture(RpcProtocol<RpcRequest> protocol) {
