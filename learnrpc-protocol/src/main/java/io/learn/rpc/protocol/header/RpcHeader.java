@@ -18,9 +18,9 @@ public class RpcHeader implements Serializable {
 
     /*
     +-------------------------------------------------------+
-    |魔数 2byte | 报文类型 1byte | 状态 1byte | 消息 ID 8byte|
+    |magic number 2byte | message type 1byte | status 1byte | message ID 8byte|
     +-------------------------------------------------------+
-    |       序列化类型 16byte     |      数据长度   4byte    |
+    |       serialize type 16byte     |      data length   4byte    |
     +-------------------------------------------------------+
      */
     /**

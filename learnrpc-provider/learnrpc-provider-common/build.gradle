@@ -6,4 +6,5 @@ jar.enabled = true
 dependencies {
     implementation project(":learnrpc-common")
     implementation project(":learnrpc-codec")
+    implementation project(":learnrpc-protocol")
 }

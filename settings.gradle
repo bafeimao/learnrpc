@@ -19,4 +19,8 @@ include 'learnrpc-serialization:learnrpc-serialization-api'
 findProject(':learnrpc-serialization:learnrpc-serialization-api')?.name = 'learnrpc-serialization-api'
 include 'learnrpc-serialization:learnrpc-serialization-jdk'
 findProject(':learnrpc-serialization:learnrpc-serialization-jdk')?.name = 'learnrpc-serialization-jdk'
+include 'learnrpc-test:learnrpc-test-consumer'
+findProject(':learnrpc-test:learnrpc-test-consumer')?.name = 'learnrpc-test-consumer'
+include 'learnrpc-test:learnrpc-test-consumer:learnrpc-test-consumer-codec'
+findProject(':learnrpc-test:learnrpc-test-consumer:learnrpc-test-consumer-codec')?.name = 'learnrpc-test-consumer-codec'
 

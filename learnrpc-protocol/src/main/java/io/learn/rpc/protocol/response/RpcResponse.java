@@ -26,4 +26,12 @@ public class RpcResponse extends RpcMessage {
     public void setError(String error) {
         this.error = error;
     }
+
+    public Object getResult() {
+        return result;
+    }
+
+    public void setResult(Object result) {
+        this.result = result;
+    }
 }

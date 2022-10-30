@@ -32,7 +32,7 @@ public class RpcDecoder extends ByteToMessageDecoder implements RpcCodec {
         }
         in.markReaderIndex();
 
-        short magic = in.readByte();
+        short magic = in.readShort();
         if (magic != RpcConstants.MAGIC) {
             throw new IllegalArgumentException("magic number is illegal," + magic);
         }
@@ -90,6 +90,7 @@ public class RpcDecoder extends ByteToMessageDecoder implements RpcCodec {
             case HEARTBEAT:
                 //todo
                 break;
+            default:
         }
 
     }

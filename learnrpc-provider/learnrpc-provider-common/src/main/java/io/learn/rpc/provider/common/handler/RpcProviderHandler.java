@@ -1,5 +1,11 @@
 package io.learn.rpc.provider.common.handler;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import io.learn.rpc.protocol.RpcProtocol;
+import io.learn.rpc.protocol.enumeration.RpcType;
+import io.learn.rpc.protocol.header.RpcHeader;
+import io.learn.rpc.protocol.request.RpcRequest;
+import io.learn.rpc.protocol.response.RpcResponse;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import org.slf4j.Logger;
@@ -16,7 +22,7 @@ import java.util.Map;
  * @date: 2022/10/30 9:53
  * @version: 1.0
  */
-public class RpcProviderHandler extends SimpleChannelInboundHandler<Object> {
+public class RpcProviderHandler extends SimpleChannelInboundHandler<RpcProtocol<RpcRequest>> {
     private final Logger log = LoggerFactory.getLogger(RpcProviderHandler.class);
 
     private final Map<String, Object> handlerMap;
@@ -26,13 +32,26 @@ public class RpcProviderHandler extends SimpleChannelInboundHandler<Object> {
     }
 
     @Override
-    protected void channelRead0(ChannelHandlerContext ctx, Object msg) throws Exception {
-        log.info("rpc provider received data is===>>>" + msg.toString());
+    protected void channelRead0(ChannelHandlerContext ctx, RpcProtocol<RpcRequest> protocol) throws Exception {
+        ObjectMapper mapper = new ObjectMapper();
+        log.info("rpc provider received data is===>>>" + mapper.writeValueAsString(protocol));
         log.info("handlerMap save data:");
         for (Map.Entry<String, Object> entry : handlerMap.entrySet()) {
             log.info(entry.getKey() + "===" + entry.getValue());
         }
+        RpcHeader header = protocol.getHeader();
+        RpcRequest request = protocol.getBody();
+        //set header message type to response type
+        header.setMsgType((byte) RpcType.RESPONSE.getType());
+        //construct response protocol data
+        RpcProtocol<RpcResponse> responseRpcProtocol = new RpcProtocol<RpcResponse>();
+        RpcResponse response = new RpcResponse();
+        response.setResult("data exchange successful");
+        response.setAsync(request.getAsync());
+        response.setOneway(request.getOneway());
+        responseRpcProtocol.setHeader(header);
+        responseRpcProtocol.setBody(response);
         //return data
-        ctx.writeAndFlush(msg);
+        ctx.writeAndFlush(responseRpcProtocol);
     }
 }
