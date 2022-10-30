@@ -1,0 +1,11 @@
+plugins {
+    id 'java'
+}
+
+group 'io.learn.rpc'
+version '0.0.1-SNAPSHOT'
+
+
+dependencies {
+
+}

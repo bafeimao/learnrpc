@@ -11,4 +11,6 @@ include 'learnrpc-provider:learnrpc-provider-common'
 findProject(':learnrpc-provider:learnrpc-provider-common')?.name = 'learnrpc-provider-common'
 include 'learnrpc-provider:learnrpc-provider-native'
 findProject(':learnrpc-provider:learnrpc-provider-native')?.name = 'learnrpc-provider-native'
+include 'learnrpc-constant'
+include 'learnrpc-protocol'
 
