@@ -105,8 +105,4 @@ public class RpcConstants {
      */
     public static final String SERVER_LOAD_BALANCER_ZKCONSISTENTHASH = "zkconsistenthash";
 
-    public static void main(String[] args) {
-        String str = "test00000000000";
-        System.out.println(str.replace("0", ""));
-    }
 }

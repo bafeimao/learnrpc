@@ -1,5 +1,7 @@
 package io.learn.rpc.provider.common.service.base;
 
+import io.learn.rpc.codec.RpcDecoder;
+import io.learn.rpc.codec.RpcEncoder;
 import io.learn.rpc.provider.common.handler.RpcProviderHandler;
 import io.learn.rpc.provider.common.service.Server;
 import io.netty.bootstrap.ServerBootstrap;
@@ -10,8 +12,6 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.handler.codec.string.StringDecoder;
-import io.netty.handler.codec.string.StringEncoder;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -67,8 +67,8 @@ public class BaseServer implements Server {
                         protected void initChannel(SocketChannel channel) throws Exception {
                             channel.pipeline()
                                     //todo self define protocol
-                                    .addLast(new StringDecoder())
-                                    .addLast(new StringEncoder())
+                                    .addLast(new RpcDecoder())
+                                    .addLast(new RpcEncoder())
                                     .addLast(new RpcProviderHandler(handlerMap));
                         }
                     })
