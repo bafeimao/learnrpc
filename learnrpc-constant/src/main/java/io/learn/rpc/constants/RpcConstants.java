@@ -31,6 +31,11 @@ public class RpcConstants {
     public static final String REFLECT_TYPE_JDK = "jdk";
 
     /**
+     * REFLECT_TYPE_CGLIB
+     */
+    public static final String REFLECT_TYPE_CGLIB = "cglib";
+
+    /**
      * javassist dynamic proxy
      */
     public static final String PROXY_JAVASSIST = "javassist";

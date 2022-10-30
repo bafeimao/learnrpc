@@ -16,7 +16,7 @@ public class RpcSingleServerTest {
     @Test
     public void startRpcSingleServer() {
         RpcSingleServer singleServer =
-                new RpcSingleServer("127.0.0.1:27880", "io.learn.rpc.test");
+                new RpcSingleServer("127.0.0.1:27880", "io.learn.rpc.test", "cglib");
         singleServer.startNettyServer();
     }
 }
