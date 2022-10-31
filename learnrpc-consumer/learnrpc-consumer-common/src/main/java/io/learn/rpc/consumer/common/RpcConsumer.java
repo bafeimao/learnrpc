@@ -1,7 +1,6 @@
 package io.learn.rpc.consumer.common;
 
 import io.learn.rpc.common.threadpool.ClientThreadPool;
-import io.learn.rpc.consumer.common.future.RpcFuture;
 import io.learn.rpc.consumer.common.handler.RpcConsumerHandler;
 import io.learn.rpc.consumer.common.initializer.RpcConsumerInitializer;
 import io.learn.rpc.protocol.RpcProtocol;
