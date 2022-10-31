@@ -10,8 +10,15 @@ repositories {
 }
 
 dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+    implementation project(":learnrpc-protocol")
+    implementation project(":learnrpc-codec")
+    implementation project(":learnrpc-common")
+    implementation project(":learnrpc-proxy:learnrpc-proxy-api")
+    implementation project(":learnrpc-registry:learnrpc-registry-api")
+    implementation project(":learnrpc-registry:learnrpc-registry-zookeeper")
+    implementation group: 'org.apache.curator', name: 'curator-framework', version: '5.4.0'
+    implementation group: 'org.apache.curator', name: 'curator-recipes', version: '5.4.0'
+    implementation group: 'org.apache.curator', name: 'curator-x-discovery', version: '5.4.0'
 }
 
 test {

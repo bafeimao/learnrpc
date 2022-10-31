@@ -25,6 +25,12 @@ public class RegistryConfig implements Serializable {
      */
     private String registryType;
 
+    public RegistryConfig(String registryAddr, String registryType) {
+        this.registryAddr = registryAddr;
+        this.registryType = registryType;
+    }
+
+
     public String getRegistryAddr() {
         return registryAddr;
     }

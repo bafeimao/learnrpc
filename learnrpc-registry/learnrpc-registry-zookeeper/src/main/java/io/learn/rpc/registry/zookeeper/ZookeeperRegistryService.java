@@ -22,7 +22,7 @@ import java.util.Random;
  * @package: io.learn.rpc.registry.zookeeper
  * @className: ZookeeperRegistryService
  * @author: ycd20
- * @description: TODO
+ * @description: zookeeper
  * @date: 2022/11/2 7:51
  * @version: 1.0
  */

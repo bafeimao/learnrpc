@@ -16,9 +16,7 @@ dependencies {
     implementation project(":learnrpc-proxy:learnrpc-proxy-api")
     implementation project(":learnrpc-registry:learnrpc-registry-api")
     implementation group: 'org.apache.curator', name: 'curator-framework', version: '5.4.0'
-    // https://mvnrepository.com/artifact/org.apache.curator/curator-recipes
     implementation group: 'org.apache.curator', name: 'curator-recipes', version: '5.4.0'
-// https://mvnrepository.com/artifact/org.apache.curator/curator-x-discovery
     implementation group: 'org.apache.curator', name: 'curator-x-discovery', version: '5.4.0'
 
 }
