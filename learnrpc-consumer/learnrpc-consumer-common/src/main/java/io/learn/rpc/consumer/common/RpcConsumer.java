@@ -6,6 +6,8 @@ import io.learn.rpc.consumer.common.handler.RpcConsumerHandler;
 import io.learn.rpc.consumer.common.initializer.RpcConsumerInitializer;
 import io.learn.rpc.protocol.RpcProtocol;
 import io.learn.rpc.protocol.request.RpcRequest;
+import io.learn.rpc.proxy.api.consumer.Consumer;
+import io.learn.rpc.proxy.api.future.RpcFuture;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
@@ -27,7 +29,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @date: 2022/10/30 21:04
  * @version: 1.0
  */
-public class RpcConsumer {
+public class RpcConsumer implements Consumer {
     private final Logger logger = LoggerFactory.getLogger(RpcConsumer.class);
 
     private final Bootstrap bootstrap;

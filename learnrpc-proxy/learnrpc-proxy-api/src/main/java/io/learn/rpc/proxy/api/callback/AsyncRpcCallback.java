@@ -1,4 +1,4 @@
-package io.learn.rpc.consumer.common.callback;
+package io.learn.rpc.proxy.api.callback;
 
 /**
  * @projectName: rpc

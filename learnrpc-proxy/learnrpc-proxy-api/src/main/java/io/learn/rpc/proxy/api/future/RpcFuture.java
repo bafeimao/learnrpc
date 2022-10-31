@@ -1,4 +1,4 @@
-package io.learn.rpc.consumer.common.future;
+package io.learn.rpc.proxy.api.future;
 
 import io.learn.rpc.common.threadpool.ClientThreadPool;
 import io.learn.rpc.consumer.common.callback.AsyncRpcCallback;
