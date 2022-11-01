@@ -15,39 +15,40 @@ import org.slf4j.LoggerFactory;
  * @package: io.learn.rpc.test.consumer.codec.handler
  * @className: RpcTestConsumerHandler
  * @author: ycd20
- * @description: test consumer
- * @date: 2022/10/30 18:15
+ * @description: test consumer handler
+ * @date: 2022/10/31 22:32
  * @version: 1.0
  */
 public class RpcTestConsumerHandler extends SimpleChannelInboundHandler<RpcProtocol<RpcResponse>> {
-
-    private final Logger log = LoggerFactory.getLogger(RpcTestConsumerHandler.class);
+    private final Logger logger = LoggerFactory.getLogger(RpcTestConsumerHandler.class);
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
-        log.info("send message start...");
-        //mock send message
-        RpcProtocol<RpcRequest> protocol = new RpcProtocol<>();
+        ObjectMapper mapper = new ObjectMapper();
+        logger.info("发送数据开始...");
+        //模拟发送数据
+        RpcProtocol<RpcRequest> protocol = new RpcProtocol<RpcRequest>();
         protocol.setHeader(RpcHeaderFactory.getRequestHeader("jdk"));
         RpcRequest request = new RpcRequest();
-        request.setClassName("io.learn.rpc.test.api.DemoService");
-        request.setGroup("learn");
+        request.setClassName("io.binghe.rpc.test.api.DemoService");
+        request.setGroup("binghe");
         request.setMethodName("hello");
-        request.setParameters(new Object[]{"learn"});
+        request.setParameters(new Object[]{"binghe"});
         request.setParameterTypes(new Class[]{String.class});
         request.setVersion("1.0.0");
         request.setAsync(false);
         request.setOneway(false);
         protocol.setBody(request);
-        ObjectMapper mapper = new ObjectMapper();
-        log.info("service consumer send message===>>>{}", mapper.writeValueAsString(protocol));
+        logger.info("服务消费者发送的数据===>>>{}", mapper.writeValueAsString(protocol));
         ctx.writeAndFlush(protocol);
-        log.info("send message complete...");
+        logger.info("发送数据完毕...");
+
     }
 
     @Override
-    protected void channelRead0(ChannelHandlerContext ctx, RpcProtocol<RpcResponse> msg) throws Exception {
+    protected void channelRead0(ChannelHandlerContext channelHandlerContext, RpcProtocol<RpcResponse> protocol) throws Exception {
         ObjectMapper mapper = new ObjectMapper();
-        log.info("service consumer receive message===>>>{}", mapper.writeValueAsString(msg));
+        logger.info("服务消费者接收到的数据===>>>{}", mapper.writeValueAsString(protocol));
     }
+
 }

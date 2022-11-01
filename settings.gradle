@@ -35,4 +35,8 @@ include 'learnrpc-proxy:learnrpc-proxy-api'
 findProject(':learnrpc-proxy:learnrpc-proxy-api')?.name = 'learnrpc-proxy-api'
 include 'learnrpc-proxy:learnrpc-proxy-jdk'
 findProject(':learnrpc-proxy:learnrpc-proxy-jdk')?.name = 'learnrpc-proxy-jdk'
+include 'learnrpc-consumer:learnrpc-consumer-native'
+findProject(':learnrpc-consumer:learnrpc-consumer-native')?.name = 'learnrpc-consumer-native'
+include 'learnrpc-test:learnrpc-test-consumer:learnrpc-test-consumer-native'
+findProject(':learnrpc-test:learnrpc-test-consumer:learnrpc-test-consumer-native')?.name = 'learnrpc-test-consumer-native'
 

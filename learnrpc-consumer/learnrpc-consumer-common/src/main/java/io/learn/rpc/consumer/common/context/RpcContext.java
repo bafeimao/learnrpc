@@ -1,6 +1,7 @@
 package io.learn.rpc.consumer.common.context;
 
-import io.learn.rpc.consumer.common.future.RpcFuture;
+
+import io.learn.rpc.proxy.api.future.RpcFuture;
 
 /**
  * @projectName: rpc

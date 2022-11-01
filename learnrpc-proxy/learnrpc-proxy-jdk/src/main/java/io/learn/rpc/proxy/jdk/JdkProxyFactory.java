@@ -14,6 +14,7 @@ import java.lang.reflect.Proxy;
  * @date: 2022/10/31 21:26
  * @version: 1.0
  */
+@SuppressWarnings("unchecked")
 public class JdkProxyFactory<T> {
     /**
      * service version
@@ -49,8 +50,9 @@ public class JdkProxyFactory<T> {
      */
     private boolean oneway;
 
-    public JdkProxyFactory(String serviceVersion, String serviceGroup, long timeout, Consumer consumer,
-                           String serializationType, boolean async, boolean oneway) {
+    public JdkProxyFactory(String serviceVersion, String serviceGroup, String serializationType, long timeout,
+                           Consumer consumer,
+                           boolean async, boolean oneway) {
         this.serviceVersion = serviceVersion;
         this.serviceGroup = serviceGroup;
         this.timeout = timeout;
@@ -64,7 +66,7 @@ public class JdkProxyFactory<T> {
         return (T) Proxy.newProxyInstance(
                 clazz.getClassLoader(),
                 new Class<?>[]{clazz},
-                new ObjectProxy<T>(clazz, serviceVersion, serviceGroup,
+                new ObjectProxy<>(clazz, serviceVersion, serviceGroup,
                         timeout, consumer, serializationType, async, oneway)
         );
     }

@@ -10,6 +10,7 @@ repositories {
 }
 
 dependencies {
+    implementation project(":learnrpc-proxy:learnrpc-proxy-api")
     implementation project(":learnrpc-consumer:learnrpc-consumer-common")
     implementation project(":learnrpc-protocol")
 }

@@ -14,10 +14,8 @@ import org.slf4j.LoggerFactory;
  * @date: 2022/10/30 11:00
  * @version: 1.0
  */
-@RpcService(interfaceClass = DemoService.class,
-        interfaceClassName = "io.learn.rpc.test.scanner.service.DemoService",
-        version = "1.0.0",
-        group = "learn")
+@RpcService(interfaceClass = DemoService.class, interfaceClassName = "io.learn.rpc.test.api.DemoService", version =
+        "1.0.0", group = "learn")
 public class ProviderDemoServiceImpl implements DemoService {
     private final Logger log = LoggerFactory.getLogger(ProviderDemoServiceImpl.class);
 

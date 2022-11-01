@@ -7,7 +7,8 @@ version '0.0.1-SNAPSHOT'
 
 
 dependencies {
-
+    implementation project(":learnrpc-serialization:learnrpc-serialization-api")
+    implementation project(":learnrpc-common")
 }
 
 test {

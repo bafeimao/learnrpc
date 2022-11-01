@@ -90,7 +90,7 @@ public class ObjectProxy<T> implements InvocationHandler {
             } else if ("toString".equals(name)) {
                 return proxy.getClass().getName() + "@" +
                         Integer.toHexString(System.identityHashCode(proxy)) +
-                        ",with InvocationHandler " + this;
+                        ", with InvocationHandler " + this;
             } else {
                 throw new IllegalStateException(String.valueOf(method));
             }
@@ -98,9 +98,12 @@ public class ObjectProxy<T> implements InvocationHandler {
         RpcProtocol<RpcRequest> requestRpcProtocol =
                 new RpcProtocol<>();
         requestRpcProtocol.setHeader(RpcHeaderFactory.getRequestHeader(serializationType));
+
         RpcRequest request = new RpcRequest();
         request.setVersion(this.serviceVersion);
         request.setClassName(method.getDeclaringClass().getName());
+        request.setMethodName(method.getName());
+        request.setParameterTypes(method.getParameterTypes());
         request.setParameters(method.getParameterTypes());
         request.setGroup(this.serviceGroup);
         request.setAsync(async);
@@ -116,8 +119,8 @@ public class ObjectProxy<T> implements InvocationHandler {
             }
         }
         if (args != null && args.length > 0) {
-            for (int i = 0; i < args.length; ++i) {
-                log.debug(args[i].toString());
+            for (Object arg : args) {
+                log.debug(arg.toString());
             }
         }
         RpcFuture rpcFuture =

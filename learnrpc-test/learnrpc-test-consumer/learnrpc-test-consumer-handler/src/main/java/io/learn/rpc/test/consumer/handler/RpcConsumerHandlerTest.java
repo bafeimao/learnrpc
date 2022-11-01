@@ -1,12 +1,12 @@
 package io.learn.rpc.test.consumer.handler;
 
 import io.learn.rpc.consumer.common.RpcConsumer;
-import io.learn.rpc.consumer.common.callback.AsyncRpcCallback;
-import io.learn.rpc.consumer.common.future.RpcFuture;
 import io.learn.rpc.consumer.common.handler.RpcConsumerHandler;
 import io.learn.rpc.protocol.RpcProtocol;
 import io.learn.rpc.protocol.header.RpcHeaderFactory;
 import io.learn.rpc.protocol.request.RpcRequest;
+import io.learn.rpc.proxy.api.callback.AsyncRpcCallback;
+import io.learn.rpc.proxy.api.future.RpcFuture;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -42,7 +42,7 @@ public class RpcServiceScanner extends ClassScanner {
                     String serviceName = getServiceName(rpcService);
                     String key = RpcServiceHelper.buildServiceKey(serviceName, rpcService.version(),
                             rpcService.group());
-                    handlerMap.put(key, clazz.getDeclaredConstructor().newInstance());
+                    handlerMap.put(key, clazz.newInstance());
                 }
             } catch (Exception e) {
                 LOGGER.error("scan classes throw exception: {}", e);

@@ -1,10 +1,10 @@
 package io.learn.rpc.proxy.api.future;
 
 import io.learn.rpc.common.threadpool.ClientThreadPool;
-import io.learn.rpc.consumer.common.callback.AsyncRpcCallback;
 import io.learn.rpc.protocol.RpcProtocol;
 import io.learn.rpc.protocol.request.RpcRequest;
 import io.learn.rpc.protocol.response.RpcResponse;
+import io.learn.rpc.proxy.api.callback.AsyncRpcCallback;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

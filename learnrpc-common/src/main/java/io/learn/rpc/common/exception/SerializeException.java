@@ -1,6 +1,5 @@
 package io.learn.rpc.common.exception;
 
-import java.io.Serial;
 
 /**
  * @projectName: rpc
@@ -12,7 +11,6 @@ import java.io.Serial;
  * @version: 1.0
  */
 public class SerializeException extends RuntimeException {
-    @Serial
     private static final long serialVersionUID = 6745845L;
 
     public SerializeException(final String message) {
