@@ -66,8 +66,8 @@ public class JdkProxyFactory<T> {
         return (T) Proxy.newProxyInstance(
                 clazz.getClassLoader(),
                 new Class<?>[]{clazz},
-                new ObjectProxy<>(clazz, serviceVersion, serviceGroup,
-                        timeout, consumer, serializationType, async, oneway)
+                new ObjectProxy<>(clazz, serviceVersion, serviceGroup, serializationType,
+                        timeout, consumer, async, oneway)
         );
     }
 }

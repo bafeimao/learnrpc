@@ -12,6 +12,8 @@ import io.learn.rpc.protocol.response.RpcResponse;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
+import net.bytebuddy.ByteBuddy;
+import net.bytebuddy.dynamic.DynamicType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cglib.reflect.FastClass;
@@ -108,6 +110,15 @@ public class RpcProviderHandler extends SimpleChannelInboundHandler<RpcProtocol<
                 throw new IllegalArgumentException("not support reflect type");
         }
     }
+
+//    private Object invokeByteBuddyMethod(Object serviceBean,Class<?> serviceClass,String methodName,
+//                                         Class<?>[] parameterTypes,Object[] parameters)throws Throwable{
+//        //Byte Buddy reflect
+//        log.info("use byte buddy reflect type invoke method...");
+//        DynamicType.Unloaded unloadedType = new ByteBuddy()
+//                .subclass(serviceClass)
+//                .method(parameterTypes).intercept()
+//    }
 
     private Object invokeCGLibMethod(Object serviceBean, Class<?> serviceClass, String methodName,
                                      Class<?>[] parameterTypes, Object[] parameters) throws Throwable {

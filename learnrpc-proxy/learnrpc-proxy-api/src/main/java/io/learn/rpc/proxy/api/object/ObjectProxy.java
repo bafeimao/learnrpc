@@ -3,6 +3,7 @@ package io.learn.rpc.proxy.api.object;
 import io.learn.rpc.protocol.RpcProtocol;
 import io.learn.rpc.protocol.header.RpcHeaderFactory;
 import io.learn.rpc.protocol.request.RpcRequest;
+import io.learn.rpc.proxy.api.async.IAsyncObjectProxy;
 import io.learn.rpc.proxy.api.consumer.Consumer;
 import io.learn.rpc.proxy.api.future.RpcFuture;
 import org.slf4j.Logger;
@@ -21,7 +22,7 @@ import java.util.concurrent.TimeUnit;
  * @date: 2022/10/31 20:57
  * @version: 1.0
  */
-public class ObjectProxy<T> implements InvocationHandler {
+public class ObjectProxy<T> implements IAsyncObjectProxy, InvocationHandler {
     private static final Logger log = LoggerFactory.getLogger(ObjectProxy.class);
 
     /**
@@ -67,16 +68,83 @@ public class ObjectProxy<T> implements InvocationHandler {
         this.clazz = clazz;
     }
 
-    public ObjectProxy(Class<T> clazz, String serviceVersion, String serviceGroup, long timeout, Consumer consumer,
-                       String serializationType, boolean async, boolean oneway) {
+    public ObjectProxy(Class<T> clazz, String serviceVersion, String serviceGroup, String serializationType,
+                       long timeout, Consumer consumer, boolean async, boolean oneway) {
         this.clazz = clazz;
         this.serviceVersion = serviceVersion;
-        this.serviceGroup = serviceGroup;
         this.timeout = timeout;
+        this.serviceGroup = serviceGroup;
         this.consumer = consumer;
         this.serializationType = serializationType;
         this.async = async;
         this.oneway = oneway;
+    }
+
+    @Override
+    public RpcFuture call(String funcName, Object... args) {
+        RpcProtocol<RpcRequest> request = createRequest(this.clazz.getName(),
+                funcName, args);
+        RpcFuture rpcFuture = null;
+        try {
+            rpcFuture = this.consumer.sendRequest(request);
+        } catch (Exception e) {
+            log.error("async call throws exception:{}", e);
+        }
+        return rpcFuture;
+    }
+
+    private RpcProtocol<RpcRequest> createRequest(String name, String funcName, Object[] args) {
+        RpcProtocol<RpcRequest> requestRpcProtocol = new RpcProtocol<>();
+
+        requestRpcProtocol.setHeader(RpcHeaderFactory.getRequestHeader(serializationType));
+        RpcRequest request = new RpcRequest();
+        request.setClassName(name);
+        request.setMethodName(funcName);
+        request.setParameters(args);
+        request.setVersion(this.serviceVersion);
+        request.setGroup(this.serviceGroup);
+
+        Class[] parameterTypes = new Class[args.length];
+        //get the right class type
+        for (int i = 0; i < args.length; i++) {
+            parameterTypes[i] = getClassType(args[i]);
+        }
+        request.setParameterTypes(parameterTypes);
+        requestRpcProtocol.setBody(request);
+
+        log.debug(name);
+        log.debug(funcName);
+        for (int i = 0; i < parameterTypes.length; i++) {
+            log.debug(parameterTypes[i].getName());
+        }
+        for (int i = 0; i < args.length; i++) {
+            log.debug(args[i].toString());
+        }
+        return requestRpcProtocol;
+    }
+
+    private Class<?> getClassType(Object obj) {
+        Class<?> classType = obj.getClass();
+        String typeName = classType.getName();
+        switch (typeName) {
+            case "java.lang.Integer":
+                return Integer.TYPE;
+            case "java.lang.Long":
+                return Long.TYPE;
+            case "java.lang.Float":
+                return Float.TYPE;
+            case "java.lang.Double":
+                return Double.TYPE;
+            case "java.lang.Character":
+                return Character.TYPE;
+            case "java.lang.Boolean":
+                return Boolean.TYPE;
+            case "java.lang.Short":
+                return Short.TYPE;
+            case "java.lang.Byte":
+                return Byte.TYPE;
+        }
+        return classType;
     }
 
     @Override

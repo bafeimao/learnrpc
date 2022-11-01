@@ -1,6 +1,8 @@
 package io.learn.rpc.consumer;
 
 import io.learn.rpc.consumer.common.RpcConsumer;
+import io.learn.rpc.proxy.api.async.IAsyncObjectProxy;
+import io.learn.rpc.proxy.api.object.ObjectProxy;
 import io.learn.rpc.proxy.jdk.JdkProxyFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -57,6 +59,11 @@ public class RpcClient {
                 serviceVersion, serviceGroup, serializationType, timeout, RpcConsumer.getInstance(), async, oneway
         );
         return jdkProxyFactory.getProxy(interfaceClass);
+    }
+
+    public <T> IAsyncObjectProxy createAsync(Class<T> interfaceClass) {
+        return new ObjectProxy<T>(interfaceClass, serviceVersion, serializationType, serviceGroup, timeout,
+                RpcConsumer.getInstance(), async, oneway);
     }
 
     public void shutdown() {

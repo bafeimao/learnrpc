@@ -28,8 +28,8 @@ subprojects {
     apply plugin: 'java'
     apply plugin: 'java-library'
 
-    sourceCompatibility = JavaVersion.VERSION_11
-    targetCompatibility = JavaVersion.VERSION_11
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
 
     dependencies {
         api platform("org.springframework.boot:spring-boot-dependencies:${springBootVersion}")
@@ -38,6 +38,7 @@ subprojects {
         implementation group: 'io.netty', name: 'netty-all', version: "${nettyVersion}"
         implementation group: 'org.apache.commons', name: 'commons-collections4', version: "${commonsCollections4Version}"
         implementation group: 'org.apache.commons', name: 'commons-lang3', version: "${commonsLang3Version}"
+        implementation 'net.bytebuddy:byte-buddy:LATEST'
         testImplementation group: 'org.objenesis', name: 'objenesis', version: "${objenesisVersion}"
         implementation group: 'org.slf4j', name: 'slf4j-reload4j', version: "${slf4jVersion}"
         implementation group: 'cglib', name: 'cglib', version: "${cglibVersion}"

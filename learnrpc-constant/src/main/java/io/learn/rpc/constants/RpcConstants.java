@@ -34,6 +34,10 @@ public class RpcConstants {
      * REFLECT_TYPE_CGLIB
      */
     public static final String REFLECT_TYPE_CGLIB = "cglib";
+    /**
+     * DEFLECT_TYPE_BYTE_BUDDY
+     */
+    public static final String REFLECT_TYPE_BYTE_BUDDY = "byteBuddy";
 
     /**
      * javassist dynamic proxy
