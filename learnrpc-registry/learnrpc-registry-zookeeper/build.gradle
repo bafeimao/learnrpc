@@ -1,0 +1,28 @@
+plugins {
+    id 'java'
+}
+
+group 'io.learn.rpc'
+version '0.0.1-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation project(":learnrpc-protocol")
+    implementation project(":learnrpc-codec")
+    implementation project(":learnrpc-common")
+    implementation project(":learnrpc-proxy:learnrpc-proxy-api")
+    implementation project(":learnrpc-registry:learnrpc-registry-api")
+    implementation group: 'org.apache.curator', name: 'curator-framework', version: '5.4.0'
+    // https://mvnrepository.com/artifact/org.apache.curator/curator-recipes
+    implementation group: 'org.apache.curator', name: 'curator-recipes', version: '5.4.0'
+// https://mvnrepository.com/artifact/org.apache.curator/curator-x-discovery
+    implementation group: 'org.apache.curator', name: 'curator-x-discovery', version: '5.4.0'
+
+}
+
+test {
+    useJUnitPlatform()
+}

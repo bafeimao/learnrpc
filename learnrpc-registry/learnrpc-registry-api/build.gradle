@@ -1,0 +1,21 @@
+plugins {
+    id 'java'
+}
+
+group 'io.learn.rpc'
+version '0.0.1-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation project(":learnrpc-protocol")
+    implementation project(":learnrpc-codec")
+    implementation project(":learnrpc-common")
+    implementation project(":learnrpc-proxy:learnrpc-proxy-api")
+}
+
+test {
+    useJUnitPlatform()
+}
