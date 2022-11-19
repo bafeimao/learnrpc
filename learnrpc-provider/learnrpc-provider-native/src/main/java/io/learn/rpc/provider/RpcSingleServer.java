@@ -1,6 +1,6 @@
 package io.learn.rpc.provider;
 
-import io.learn.rpc.common.scanner.server.RpcServiceScanner;
+import io.learn.rpc.provider.common.scanner.RpcServiceScanner;
 import io.learn.rpc.provider.common.service.base.BaseServer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,12 +18,14 @@ public class RpcSingleServer extends BaseServer {
 
     private final Logger log = LoggerFactory.getLogger(RpcSingleServer.class);
 
-    public RpcSingleServer(String serverAddress, String scanPackage, String reflectType) {
+    public RpcSingleServer(String serverAddress, String registryAddress, String registryType, String scanPackage,
+                           String reflectType) {
         //
-        super(serverAddress, reflectType);
+        super(serverAddress, registryAddress, registryType, reflectType);
         try {
             this.handlerMap =
-                    RpcServiceScanner.doScannerWithRpcServiceAnnotationFilterAndRegistryService(scanPackage);
+                    RpcServiceScanner.doScannerWithRpcServiceAnnotationFilterAndRegistryService(
+                            this.host, this.port, scanPackage, registryService);
         } catch (Exception e) {
             log.error("RPC Server init error", e);
         }

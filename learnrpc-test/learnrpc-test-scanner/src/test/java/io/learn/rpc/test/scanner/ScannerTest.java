@@ -2,8 +2,7 @@ package io.learn.rpc.test.scanner;
 
 import io.learn.rpc.common.scanner.ClassScanner;
 import io.learn.rpc.common.scanner.reference.RpcReferenceScanner;
-import io.learn.rpc.common.scanner.server.RpcServiceScanner;
-import org.junit.jupiter.api.BeforeAll;
+import io.learn.rpc.provider.common.scanner.RpcServiceScanner;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -31,7 +30,7 @@ public class ScannerTest {
 
     @Test
     public void testScannerClassNameListByRpcService() throws Exception {
-        RpcServiceScanner.doScannerWithRpcServiceAnnotationFilterAndRegistryService("io.learn.rpc.test.scanner");
+//        RpcServiceScanner.doScannerWithRpcServiceAnnotationFilterAndRegistryService("io.learn.rpc.test.scanner");
     }
 
     @Test

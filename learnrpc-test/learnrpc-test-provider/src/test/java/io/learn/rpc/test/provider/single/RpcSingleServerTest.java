@@ -16,7 +16,9 @@ public class RpcSingleServerTest {
     @Test
     public void startRpcSingleServer() {
         RpcSingleServer singleServer =
-                new RpcSingleServer("127.0.0.1:27880", "io.learn.rpc.test", "jdk");
+                new RpcSingleServer("127.0.0.1:27880",
+                        "127.0.0.1:2181", "zookeeper"
+                        , "io.learn.rpc.test", "jdk");
         singleServer.startNettyServer();
     }
 }

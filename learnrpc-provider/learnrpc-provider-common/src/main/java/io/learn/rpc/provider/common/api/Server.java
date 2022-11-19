@@ -1,4 +1,4 @@
-package io.learn.rpc.provider.common.service;
+package io.learn.rpc.provider.common.api;
 
 /**
  * @projectName: rpc

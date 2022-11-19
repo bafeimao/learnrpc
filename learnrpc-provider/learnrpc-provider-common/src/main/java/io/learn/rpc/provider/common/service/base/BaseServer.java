@@ -3,7 +3,10 @@ package io.learn.rpc.provider.common.service.base;
 import io.learn.rpc.codec.RpcDecoder;
 import io.learn.rpc.codec.RpcEncoder;
 import io.learn.rpc.provider.common.handler.RpcProviderHandler;
-import io.learn.rpc.provider.common.service.Server;
+import io.learn.rpc.provider.common.api.Server;
+import io.learn.rpc.registry.api.RegistryService;
+import io.learn.rpc.registry.api.config.RegistryConfig;
+import io.learn.rpc.registry.zookeeper.ZookeeperRegistryService;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -29,6 +32,7 @@ import java.util.Map;
  * @version: 1.0
  */
 public class BaseServer implements Server {
+    protected RegistryService registryService;
 
     private final Logger log = LoggerFactory.getLogger(BaseServer.class);
 
@@ -50,13 +54,25 @@ public class BaseServer implements Server {
      */
     private String reflectType;
 
-    public BaseServer(String serverAddress, String reflectType) {
+    public BaseServer(String serverAddress, String registryAddress, String registryType, String reflectType) {
         if (!StringUtils.isEmpty(serverAddress)) {
             String[] serverArray = serverAddress.split(":");
             this.host = serverArray[0];
             this.port = Integer.parseInt(serverArray[1]);
         }
         this.reflectType = reflectType;
+        this.registryService = this.getRegistryService(registryAddress, registryType);
+    }
+
+    private RegistryService getRegistryService(String registryAddress, String registryType) {
+        RegistryService registryService = null;
+        try {
+            registryService = new ZookeeperRegistryService();
+            registryService.init(new RegistryConfig(registryAddress, registryType));
+        } catch (Exception e) {
+            log.error("RpcServer init error");
+        }
+        return registryService;
     }
 
 
