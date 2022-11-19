@@ -3,14 +3,14 @@ ext {
     springBootVersion = "2.7.5"
     commonsLoggingVersion = "1.2"
     springVersion = "5.3.23"
-    nettyVersion = "4.1.84.Final"
+    nettyVersion = "4.1.85.Final"
     commonsCollections4Version = "4.4"
     commonsLang3Version = "3.12.0"
     objenesisVersion = "3.3"
     cglibVersion = "3.3.0"
     javassistVersion = "3.29.2-GA"
-    jacksonDataBindVersion = "2.13.4.2"
-    jacksonCoreVersion = "2.13.4"
+    jacksonDataBindVersion = "2.14.0"
+    jacksonCoreVersion = "2.14.0"
 }
 
 ext.libs = [

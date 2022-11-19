@@ -3,6 +3,7 @@ package io.learn.rpc.proxy.api.consumer;
 import io.learn.rpc.protocol.RpcProtocol;
 import io.learn.rpc.protocol.request.RpcRequest;
 import io.learn.rpc.proxy.api.future.RpcFuture;
+import io.learn.rpc.registry.api.RegistryService;
 
 /**
  * @projectName: rpc
@@ -21,5 +22,5 @@ public interface Consumer {
      * @return
      * @throws Exception
      */
-    RpcFuture sendRequest(RpcProtocol<RpcRequest> protocol) throws Exception;
+    RpcFuture sendRequest(RpcProtocol<RpcRequest> protocol, RegistryService registryService) throws Exception;
 }

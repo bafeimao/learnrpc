@@ -23,22 +23,22 @@ public class RpcConsumerHandlerTest {
     private static final Logger log = LoggerFactory.getLogger(RpcConsumerHandler.class);
 
     public static void main(String[] args) throws Exception {
-        RpcConsumer consumer = RpcConsumer.getInstance();
-        consumer.sendRequest(getRpcRequestProtocol());
-        RpcFuture rpcFuture = consumer.sendRequest(getRpcRequestProtocol());
-        rpcFuture.addCallback(new AsyncRpcCallback() {
-            @Override
-            public void onSuccess(Object result) {
-                log.info("get data from service consumer===>>>" + result);
-            }
-
-            @Override
-            public void onException(Exception e) {
-                log.error("throw exception" + e);
-            }
-        });
-        Thread.sleep(2000);
-        consumer.close();
+//        RpcConsumer consumer = RpcConsumer.getInstance();
+//        consumer.sendRequest(getRpcRequestProtocol());
+//        RpcFuture rpcFuture = consumer.sendRequest(getRpcRequestProtocol());
+//        rpcFuture.addCallback(new AsyncRpcCallback() {
+//            @Override
+//            public void onSuccess(Object result) {
+//                log.info("get data from service consumer===>>>" + result);
+//            }
+//
+//            @Override
+//            public void onException(Exception e) {
+//                log.error("throw exception" + e);
+//            }
+//        });
+//        Thread.sleep(2000);
+//        consumer.close();
     }
 
     private static RpcProtocol<RpcRequest> getRpcRequestProtocol() {

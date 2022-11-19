@@ -16,6 +16,8 @@ dependencies {
     implementation project(":learnrpc-consumer:learnrpc-consumer-common")
     implementation project(":learnrpc-proxy:learnrpc-proxy-api")
     implementation project(":learnrpc-proxy:learnrpc-proxy-jdk")
+    implementation project(":learnrpc-registry:learnrpc-registry-api")
+    implementation project(":learnrpc-registry:learnrpc-registry-zookeeper")
 }
 
 test {

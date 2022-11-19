@@ -4,14 +4,15 @@ buildscript {
         springBootVersion = "2.7.5"
         commonsLoggingVersion = "1.2"
         springVersion = "5.3.23"
-        nettyVersion = "4.1.84.Final"
+        nettyVersion = "4.1.85.Final"
         commonsCollections4Version = "4.4"
         commonsLang3Version = "3.12.0"
         objenesisVersion = "3.3"
         cglibVersion = "3.3.0"
         javassistVersion = "3.29.2-GA"
-        jacksonDataBindVersion = "2.13.4.2"
-        jacksonCoreVersion = "2.13.4"
+        jacksonDataBindVersion = "2.14.0"
+        jacksonCoreVersion = "2.14.o"
+        byteBuddyVersion = "1.12.18"
     }
 }
 
@@ -27,7 +28,6 @@ subprojects {
     group = 'io.learn.rpc'
     version = '0.0.1-SNAPSHOT'
 
-    apply plugin: 'java'
     apply plugin: 'java-library'
     apply plugin: 'idea'
     sourceCompatibility = JavaVersion.VERSION_17
@@ -46,7 +46,7 @@ subprojects {
         implementation group: 'io.netty', name: 'netty-all', version: "${nettyVersion}"
         implementation group: 'org.apache.commons', name: 'commons-collections4', version: "${commonsCollections4Version}"
         implementation group: 'org.apache.commons', name: 'commons-lang3', version: "${commonsLang3Version}"
-        implementation 'net.bytebuddy:byte-buddy:LATEST'
+        implementation 'net.bytebuddy:byte-buddy:1.12.18'
         testImplementation group: 'org.objenesis', name: 'objenesis', version: "${objenesisVersion}"
         implementation group: 'org.slf4j', name: 'slf4j-reload4j', version: "${slf4jVersion}"
         implementation group: 'cglib', name: 'cglib', version: "${cglibVersion}"

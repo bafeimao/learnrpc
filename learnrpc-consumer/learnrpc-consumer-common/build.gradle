@@ -11,6 +11,7 @@ dependencies {
     implementation project(":learnrpc-codec")
     implementation project(":learnrpc-common")
     implementation project(":learnrpc-proxy:learnrpc-proxy-api")
+    implementation project(":learnrpc-registry:learnrpc-registry-api")
 }
 
 test {
