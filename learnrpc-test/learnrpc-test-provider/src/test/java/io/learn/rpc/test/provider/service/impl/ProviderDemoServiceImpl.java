@@ -1,6 +1,6 @@
 package io.learn.rpc.test.provider.service.impl;
 
-import io.learn.rpc.annotation.RpcService;
+import io.learn.rpc.spi.annotation.RpcService;
 import io.learn.rpc.test.api.DemoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

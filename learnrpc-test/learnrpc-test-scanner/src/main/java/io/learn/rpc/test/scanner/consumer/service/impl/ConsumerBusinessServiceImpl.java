@@ -1,6 +1,6 @@
 package io.learn.rpc.test.scanner.consumer.service.impl;
 
-import io.learn.rpc.annotation.RpcReference;
+import io.learn.rpc.spi.annotation.RpcReference;
 import io.learn.rpc.test.scanner.consumer.service.ConsumerBusinessService;
 import io.learn.rpc.test.scanner.service.DemoService;
 

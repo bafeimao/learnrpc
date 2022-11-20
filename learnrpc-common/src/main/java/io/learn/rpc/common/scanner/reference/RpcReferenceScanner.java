@@ -1,6 +1,6 @@
 package io.learn.rpc.common.scanner.reference;
 
-import io.learn.rpc.annotation.RpcReference;
+import io.learn.rpc.spi.annotation.RpcReference;
 import io.learn.rpc.common.scanner.ClassScanner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

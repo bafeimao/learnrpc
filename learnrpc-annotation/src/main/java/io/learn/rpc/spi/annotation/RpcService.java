@@ -1,4 +1,4 @@
-package io.learn.rpc.annotation;
+package io.learn.rpc.spi.annotation;
 
 import org.springframework.stereotype.Component;
 

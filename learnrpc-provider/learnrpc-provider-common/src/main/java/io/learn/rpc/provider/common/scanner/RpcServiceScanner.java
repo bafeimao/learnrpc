@@ -1,6 +1,6 @@
 package io.learn.rpc.provider.common.scanner;
 
-import io.learn.rpc.annotation.RpcService;
+import io.learn.rpc.spi.annotation.RpcService;
 import io.learn.rpc.common.helper.RpcServiceHelper;
 import io.learn.rpc.common.scanner.ClassScanner;
 import io.learn.rpc.protocol.meta.ServiceMeta;

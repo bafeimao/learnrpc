@@ -1,6 +1,6 @@
 package io.learn.rpc.test.scanner.provider;
 
-import io.learn.rpc.annotation.RpcService;
+import io.learn.rpc.spi.annotation.RpcService;
 import io.learn.rpc.test.scanner.service.DemoService;
 
 /**
