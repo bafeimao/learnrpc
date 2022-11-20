@@ -1,6 +1,8 @@
 package io.learn.rpc.registry.zookeeper;
 
 import io.learn.rpc.common.helper.RpcServiceHelper;
+import io.learn.rpc.loadbalancer.api.ServiceLoadBalancer;
+import io.learn.rpc.loadbalancer.random.RandomServiceLoadBalancer;
 import io.learn.rpc.protocol.meta.ServiceMeta;
 import io.learn.rpc.registry.api.RegistryService;
 import io.learn.rpc.registry.api.config.RegistryConfig;
@@ -33,6 +35,8 @@ public class ZookeeperRegistryService implements RegistryService {
 
     private ServiceDiscovery<ServiceMeta> serviceDiscovery;
 
+    private ServiceLoadBalancer<ServiceInstance<ServiceMeta>> serviceLoadBalancer;
+
     @Override
     public void register(ServiceMeta serviceMeta) throws Exception {
         ServiceInstance<ServiceMeta> serviceInstance =
@@ -64,22 +68,13 @@ public class ZookeeperRegistryService implements RegistryService {
     public ServiceMeta discovery(String serviceName, int invokerHashCode) throws Exception {
         Collection<ServiceInstance<ServiceMeta>> serviceInstances = serviceDiscovery.queryForInstances(serviceName);
         ServiceInstance<ServiceMeta> instance =
-                this.selectOneServiceInstance((List<ServiceInstance<ServiceMeta>>) serviceInstances);
+                serviceLoadBalancer.select((List<ServiceInstance<ServiceMeta>>)
+                        serviceInstances, invokerHashCode);
         if (instance != null) {
             return instance.getPayload();
         }
         return null;
     }
-
-    private ServiceInstance<ServiceMeta> selectOneServiceInstance(List<ServiceInstance<ServiceMeta>> serviceInstances) {
-        if (serviceInstances == null || serviceInstances.isEmpty()) {
-            return null;
-        }
-        Random random = new Random();
-        int index = random.nextInt(serviceInstances.size());
-        return serviceInstances.get(index);
-    }
-
 
     @Override
     public void destroy() throws IOException {
@@ -102,5 +97,6 @@ public class ZookeeperRegistryService implements RegistryService {
                         .basePath(ZK_BASE_PATH)
                         .build();
         this.serviceDiscovery.start();
+        this.serviceLoadBalancer = new RandomServiceLoadBalancer<ServiceInstance<ServiceMeta>>();
     }
 }

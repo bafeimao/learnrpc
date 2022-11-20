@@ -17,6 +17,8 @@ dependencies {
     implementation group: 'org.apache.curator', name: 'curator-recipes', version: '5.4.0'
     implementation group: 'org.apache.curator', name: 'curator-x-discovery', version: '5.4.0'
     implementation project(":learnrpc-registry:learnrpc-registry-api")
+    implementation project(":learnrpc-loadbalancer:learnrpc-loadbalancer-api")
+    implementation project(":learnrpc-loadbalancer:learnrpc-loadbalancer-random")
 }
 
 test {
